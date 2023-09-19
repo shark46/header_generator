@@ -71,29 +71,29 @@ To finish just enter \"f\"\n\
 			printf(">>--------|\n%d>", byte_count+1);
 		}else{						//If something exept enter is coming
 			if(input=='0'||input=='1'){
-				if(bit_count > 8){ //If too many digits is coming...//
+				if(bit_count > 8){ //If too many digits is coming...//==//
 					printf("8 digits maximum!\a\n%d>--------|\n>>", 1+byte_count);
-					bit_count = 0;									//
-					do{												//
-						input = getchar();							//
-					}while(input != '\n');							//
-					input=0;										//
-					inputbuf=0;										//
-					buf[0]=0;										//
-					if(flag_bc)	byte_count--;						//
-					flag_bc = 0;									//
-				}else{//============================================//
+					bit_count = 0;					//
+					do{						//
+						input = getchar();			//
+					}while(input != '\n');				//
+					input=0;					//
+					inputbuf=0;					//
+					buf[0]=0;					//
+					if(flag_bc)	byte_count--;			//
+					flag_bc = 0;					//
+				}else{//================================================//
 					inputbuf<<=1; //Everything is OK. Storing the data
 					inputbuf|=(input-'0');
 				}
-			}else{//=======If input is not 0 or 1===================//
+			}else{		//=======If input is not 0 or 1===================//
 				switch (input)
 				{
 				case 'f':
 					enough++;
 					break;
-				case 'd':		//Remove previous byte
-						if(byte_count){ // If it is not first byte
+				case 'd':				// Remove previous byte
+						if(byte_count){ 	// If it is not first byte
 							fseek(file, -1, SEEK_CUR);
 							do{
 								fseek(file, -1, SEEK_CUR);
@@ -118,8 +118,8 @@ To finish just enter \"f\"\n\
 								file = fopen(filename, "w+");
 								fwrite(&filebuf[0], sizeof(char), tmp, file);
 							}							
-						}else{		//If it is first byte
-							if(frame_count-1){	//And it is not first frame
+						}else{				// If it is first byte
+							if(frame_count-1){	// And it is not first frame
 								do{
 									fseek(file, -1, SEEK_CUR);
 									fread(&tmp, sizeof(char), 1, file);
@@ -139,8 +139,8 @@ To finish just enter \"f\"\n\
 								}else{
 									printf("|===%d====|\n", frame_count);
 								}
-							}else{	//first byte first frame
-								printf("Nothing to delete...\n");//
+							}else{			// first byte first frame
+								printf("Nothing to delete...\n");
 							}
 						}
 						do{
@@ -151,44 +151,44 @@ To finish just enter \"f\"\n\
 				
 				default:
 					printf("Ony 1 or 0 are allowed!\a\n%d>--------|\n>>", 1+byte_count);
-					do{													//
-						input = getchar();								//
-					}while(input != '\n');								//
-					input=0;											//
-					inputbuf=0;											//
-					buf[0]=0;											//
-					if(flag_bc) byte_count--;							//
-					flag_bc = 0;										//
-					bit_count = 0;										//
+					do{										
+						input = getchar();							
+					}while(input != '\n');								
+					input=0;									
+					inputbuf=0;									
+					buf[0]=0;									
+					if(flag_bc) byte_count--;							
+					flag_bc = 0;									
+					bit_count = 0;									
 						break;
 				}				
-			}//=====================================================//
+			}	
 		}
 	}
 	if(frame_count - 1){
 		for(;;){	//============find "}," and delete ","==========//
-			fseek(file, -2, SEEK_CUR);								//
-			fread(&buf[0], sizeof(char), 2, file);					//
-			if((buf[0] == '}') && (buf[1] == ',')){					//
-				fseek(file, -1, SEEK_CUR);							//
-				buf[0] = ' ';										//
-				fwrite(&buf[0], sizeof(char), 1, file);				//
-				fseek(file, 0, SEEK_END);							//
-				break;												//
-			}														//
-			fseek(file, -1, SEEK_CUR);								//
-		}//=========================================================//
+			fseek(file, -2, SEEK_CUR);				//
+			fread(&buf[0], sizeof(char), 2, file);			//
+			if((buf[0] == '}') && (buf[1] == ',')){			//
+				fseek(file, -1, SEEK_CUR);			//
+				buf[0] = ' ';					//
+				fwrite(&buf[0], sizeof(char), 1, file);		//
+				fseek(file, 0, SEEK_END);			//
+				break;						//
+			}							//
+			fseek(file, -1, SEEK_CUR);				//
+		}//=============================================================//
 	}
 	if(byte_count){	//If it is not first byte in frame
 		for(;;){	//============find "\n{" and delete ============//
-			fseek(file, -2, SEEK_CUR);								//
-			fread(&buf[0], sizeof(char), 2, file);					//
-			if((buf[0] == '\n') && (buf[1] == '{')){				//
-				fseek(file, -2, SEEK_CUR);							//
-				break;												//
-			}														//
-			fseek(file, -1, SEEK_CUR);								//
-		}//=========================================================//
+			fseek(file, -2, SEEK_CUR);				//
+			fread(&buf[0], sizeof(char), 2, file);			//
+			if((buf[0] == '\n') && (buf[1] == '{')){		//
+				fseek(file, -2, SEEK_CUR);			//
+				break;						//
+			}							//
+			fseek(file, -1, SEEK_CUR);				//
+		}//=============================================================//
 	}else{
 		fseek(file, -1, SEEK_CUR);
 	}
