@@ -194,7 +194,7 @@ To finish just enter \"f\"\n\
 	}
 	
 	fwrite("\n};", sizeof(char), 3, file);
-	sprintf(&buf2[0], "\n\nconst unsigned int frame_count = %d;", --frame_count);
+	sprintf(&buf2[0], "\n\nconst unsigned int frame_count = %d;\n", --frame_count);
 	fwrite(&buf2[0], sizeof(char), strlen(&buf2[0]), file);
 	fclose(file);
 
